@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
-import { ContactsEditor } from "./ContactsEditor";
-import { ContactsRendering } from "./ContactsRendering";
-import ContactsFilter from "./ContactsFilter";
+import { ContactsEditor } from "../ContactsEditor/ContactsEditor";
+import { ContactsRendering } from "../ContactsRendering/ContactsRendering";
+import ContactsFilter from "../ContactsFilter/ContactsFilter";
 import "./ContactsList.css";
 
 export class ContactsList extends Component {
@@ -27,6 +27,21 @@ export class ContactsList extends Component {
 			})
 		),
 	};
+
+	componentDidUpdate(prevProps, prevState) {
+		const currentContacts = this.state.contacts;
+		const previousContacts = prevState.contacts;
+		if (previousContacts !== currentContacts) {
+			localStorage.setItem("contacts", JSON.stringify(currentContacts));
+		}
+	}
+
+	componentDidMount() {
+		const savedContacts = JSON.parse(localStorage.getItem("contacts"));
+		if (savedContacts) {
+			return this.setState({ contacts: savedContacts });
+		}
+	}
 
 	addContact = ({ name, number }) => {
 		const contact = {

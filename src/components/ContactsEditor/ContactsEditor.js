@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import "./ContactsList.css";
+import "./ContactsEditor.css";
 
 export class ContactsEditor extends Component {
 	state = { name: "", number: "" };
